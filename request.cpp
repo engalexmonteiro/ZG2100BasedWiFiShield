@@ -34,12 +34,12 @@
 #ifdef ENABLE_CLIENT_MODE
 
 // IP, host name and URL for the TWEET class
-uint8 twitterIP[] = {128, 121, 146, 100};
+uint8_t twitterIP[] = {128, 121, 146, 100};
 char twitterHost[] = {"twitter.com"};
 char twitterURL[] = {"/statuses/update.xml"};
 
 
-GETrequest::GETrequest(uint8* ipAddr, int port, char* hostName, char* URL) {
+GETrequest::GETrequest(uint8_t* ipAddr, int port, char* hostName, char* URL) {
 	// Store IP address using the uIP type
 	uip_ipaddr(this->ipAddr, ipAddr[0], ipAddr[1], ipAddr[2], ipAddr[3]);
 	// Store port in network order
@@ -81,7 +81,7 @@ boolean GETrequest::isActive() {
 
 
 
-POSTrequest::POSTrequest(uint8* ipAddr, int port, char* hostName, char* URL, bodyFunction body) : 
+POSTrequest::POSTrequest(uint8_t* ipAddr, int port, char* hostName, char* URL, bodyFunction body) : 
     // Create a request with the IP, port, host name and URL
 	GETrequest (ipAddr, port, hostName, URL) {
 		// Set the body callback function

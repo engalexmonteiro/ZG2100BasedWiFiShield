@@ -47,26 +47,13 @@
 typedef unsigned int size_t;
 #endif
 
-typedef char int8;
-typedef volatile char vint8;
-typedef unsigned char uint8;
-typedef volatile unsigned char vuint8;
-typedef int int16;
-typedef volatile int vint16;
-typedef unsigned int uint16;
-typedef volatile unsigned int vuint16;
-typedef long int32;
-typedef volatile long vint32;
-typedef unsigned long uint32;
-typedef volatile unsigned long vuint32;
+typedef volatile char vint8_t;
+typedef volatile unsigned char vuint8_t;
+typedef volatile int vint16_t;
+typedef volatile unsigned int vuint16_t;
+typedef volatile long vint32_t;
+typedef volatile unsigned long vuint32_t;
 
-typedef unsigned char u8;
-typedef unsigned char U8;
-typedef unsigned int u16;
-typedef unsigned int U16;
-typedef unsigned long u32;
-typedef unsigned long U32;
 
-typedef uint8_t boolean;
 
 #endif /* WITYPES_H_ */

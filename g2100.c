@@ -40,24 +40,24 @@
 #include "spi.h"
 #include "global-conf.h"
 
-static U8 mac[6];
-static U8 zg_conn_status;
+static uint8_t mac[6];
+static uint8_t zg_conn_status;
 
-static U8 hdr[5];
-static U8 intr_occured;
-static U8 intr_valid;
-static U8 zg_drv_state;
-static U8 tx_ready;
-static U8 rx_ready;
-static U8 cnf_pending;
-static U8* zg_buf;
-static U16 zg_buf_len;
+static uint8_t hdr[5];
+static uint8_t intr_occured;
+static uint8_t intr_valid;
+static uint8_t zg_drv_state;
+static uint8_t tx_ready;
+static uint8_t rx_ready;
+static uint8_t cnf_pending;
+static uint8_t* zg_buf;
+static uint16_t zg_buf_len;
 
-static U8 wpa_psk_key[32];
+static uint8_t wpa_psk_key[32];
 
 void zg_init()
 {
-	U8 clr;
+	uint8_t clr;
 
 	ZG2100_SpiInit();
 	clr = SPSR;
@@ -78,13 +78,13 @@ void zg_init()
 	zg_interrupt_reg(0xff, 0);
 	zg_interrupt_reg(0x80|0x40, 1);
 
-	ssid_len = (U8)strlen_P(ssid);
-	security_passphrase_len = (U8)strlen_P(security_passphrase);
+	ssid_len = (uint8_t)strlen_P(ssid);
+	security_passphrase_len = (uint8_t)strlen_P(security_passphrase);
 }
 
-void spi_transfer(volatile U8* buf, U16 len, U8 toggle_cs)
+void spi_transfer(volatile uint8_t* buf, uint16_t len, uint8_t toggle_cs)
 {
-	U16 i;
+	uint16_t i;
 
 	ZG2100_CSoff();
 
@@ -101,7 +101,7 @@ void spi_transfer(volatile U8* buf, U16 len, U8 toggle_cs)
 
 void zg_chip_reset()
 {
-	U8 loop_cnt = 0;
+	uint8_t loop_cnt = 0;
 
 	do {
 		// write reset register addr
@@ -157,7 +157,7 @@ void zg_interrupt2_reg()
 	return;
 }
 
-void zg_interrupt_reg(U8 mask, U8 state)
+void zg_interrupt_reg(uint8_t mask, uint8_t state)
 {
 	// read the interrupt register
 	hdr[0] = 0x40 | ZG_INTR_MASK_REG;
@@ -183,8 +183,8 @@ void zg_isr()
 
 void zg_process_isr()
 {
-	U8 intr_state = 0;
-	U8 next_cmd = 0;
+	uint8_t intr_state = 0;
+	uint8_t next_cmd = 0;
 
 	hdr[0] = 0x40 | ZG_INTR_REG;
 	hdr[1] = 0x00;
@@ -197,7 +197,7 @@ void zg_process_isr()
 		switch(intr_state) {
 		case ZG_INTR_ST_RD_INTR_REG:
 		{
-			U8 intr_val = hdr[1] & hdr[2];
+			uint8_t intr_val = hdr[1] & hdr[2];
 
 			if ( (intr_val & ZG_INTR_MASK_FIFO1) == ZG_INTR_MASK_FIFO1) {
 				hdr[0] = ZG_INTR_REG;
@@ -234,7 +234,7 @@ void zg_process_isr()
 			break;
 		case ZG_INTR_ST_RD_CTRL_REG:
 		{
-			U16 rx_byte_cnt = (0x0000 | (hdr[1] << 8) | hdr[2]) & 0x0fff;
+			uint16_t rx_byte_cnt = (0x0000 | (hdr[1] << 8) | hdr[2]) & 0x0fff;
 
 			zg_buf[0] = ZG_CMD_RD_FIFO;
 			spi_transfer(zg_buf, rx_byte_cnt + 1, 1);
@@ -264,7 +264,7 @@ void zg_process_isr()
 #endif
 }
 
-void zg_send(U8* buf, U16 len)
+void zg_send(uint8_t* buf, uint16_t len)
 {
 	hdr[0] = ZG_CMD_WT_FIFO_DATA;
 	hdr[1] = ZG_MAC_TYPE_TXDATA_REQ;
@@ -283,7 +283,7 @@ void zg_send(U8* buf, U16 len)
 	spi_transfer(hdr, 1, 1);
 }
 
-void zg_recv(U8* buf, U16* len)
+void zg_recv(uint8_t* buf, uint16_t* len)
 {
 	zg_rx_data_ind_t* ptr = (zg_rx_data_ind_t*)&(zg_buf[3]);
 	*len = ZGSTOHS( ptr->dataLen );
@@ -295,7 +295,7 @@ void zg_recv(U8* buf, U16* len)
 	*len += 12;
 }
 
-U16 zg_get_rx_status()
+uint16_t zg_get_rx_status()
 {
 	if (rx_ready) {
 		rx_ready = 0;
@@ -311,28 +311,28 @@ void zg_clear_rx_status()
 	rx_ready = 0;
 }
 
-void zg_set_tx_status(U8 status)
+void zg_set_tx_status(uint8_t status)
 {
 	tx_ready = status;
 }
 
-U8 zg_get_conn_state()
+uint8_t zg_get_conn_state()
 {
 	return zg_conn_status;
 }
 
-void zg_set_buf(U8* buf, U16 buf_len)
+void zg_set_buf(uint8_t* buf, uint16_t buf_len)
 {
 	zg_buf = buf;
 	zg_buf_len = buf_len;
 }
 
-U8* zg_get_mac()
+uint8_t* zg_get_mac()
 {
 	return mac;
 }
 
-void zg_write_wep_key(U8* cmd_buf)
+void zg_write_wep_key(uint8_t* cmd_buf)
 {
 	zg_wep_key_req_t* cmd = (zg_wep_key_req_t*)cmd_buf;
 
@@ -347,7 +347,7 @@ void zg_write_wep_key(U8* cmd_buf)
 	return;
 }
 
-static void zg_calc_psk_key(U8* cmd_buf)
+static void zg_calc_psk_key(uint8_t* cmd_buf)
 {
 	zg_psk_calc_req_t* cmd = (zg_psk_calc_req_t*)cmd_buf;
 
@@ -363,7 +363,7 @@ static void zg_calc_psk_key(U8* cmd_buf)
 	return;
 }
 
-static void zg_write_psk_key(U8* cmd_buf)
+static void zg_write_psk_key(uint8_t* cmd_buf)
 {
 	zg_pmk_key_req_t* cmd = (zg_pmk_key_req_t*)cmd_buf;
 
@@ -444,7 +444,7 @@ void zg_drv_process()
 				break;
 			case ZG_MAC_SUBTYPE_MGMT_IND_CONN_STATUS:
 				{
-					U16 status = (((U16)(zg_buf[3]))<<8)|zg_buf[4];
+					uint16_t status = (((uint16_t)(zg_buf[3]))<<8)|zg_buf[4];
 
 					if (status == 1 || status == 5) {
 						LEDConn_off();

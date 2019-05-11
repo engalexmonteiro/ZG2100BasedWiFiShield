@@ -55,17 +55,17 @@ void network_send(void)
 			zg_set_buf(uip_buf, uip_len);
 		}
 		else{
-			memcpy((u8*)&uip_buf[54], (u8*)uip_appdata, (uip_len-54));
+			memcpy((uint8_t*)&uip_buf[54], (uint8_t*)uip_appdata, (uip_len-54));
 			zg_set_buf(uip_buf, uip_len);
 		}
 		zg_set_tx_status(1);
 	}
 }
 
-void network_get_MAC(u8* macaddr)
+void network_get_MAC(uint8_t* macaddr)
 {
 }
 
-void network_set_MAC(u8* macaddr)
+void network_set_MAC(uint8_t* macaddr)
 {
 }

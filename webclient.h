@@ -87,18 +87,18 @@
 #define WEBCLIENT_CONF_MAX_URLLEN 10	//100
 
 struct webclient_state {
-  u8_t timer;
-  u8_t state;
-  u8_t httpflag;
+  uint8_t timer;
+  uint8_t state;
+  uint8_t httpflag;
 
-  u16_t port;
+  uint16_t port;
   char host[2];	//[40];
   char file[WEBCLIENT_CONF_MAX_URLLEN];
-  u16_t getrequestptr;
-  u16_t getrequestleft;
+  uint16_t getrequestptr;
+  uint16_t getrequestleft;
 
   char httpheaderline[10];	//[200];
-  u16_t httpheaderlineptr;
+  uint16_t httpheaderlineptr;
 
   char mimetype[2];	//[32];
 };
@@ -121,7 +121,7 @@ typedef struct webclient_state uip_tcp_appstate_t;
  * \param data A pointer to the data that has been received.
  * \param len The length of the data that has been received.
  */
-void webclient_datahandler(char *data, u16_t len);
+void webclient_datahandler(char *data, uint16_t len);
 
 /**
  * Callback function that is called from the webclient code when the
@@ -203,7 +203,7 @@ void webclient_init(void);
  *
  * \retval 1 if the connection was initiated.
  */
-unsigned char webclient_get(char *host, u16_t port, char *file);
+unsigned char webclient_get(char *host, uint16_t port, char *file);
 
 /**
  * Close the currently open HTTP connection.

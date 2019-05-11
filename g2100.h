@@ -53,7 +53,7 @@
 #define ZGTOHL(a) HTOZGL(a)
 
 // Host to Zero G short
-#define HSTOZGS(a) (u16)(((a)<<8) | ((a)>>8))
+#define HSTOZGS(a) (uint16_t)(((a)<<8) | ((a)>>8))
 #define ZGSTOHS(a) HSTOZGS(a)
 //#define HTONS(a) HSTOZGS(a)
 
@@ -70,35 +70,35 @@
 #define ZG_CMD_RD_REG				(0x40)
 
 // Type values which appear in ZG_PREAMBLE_TYPE_IDX for each SPI message
-#define ZG_MAC_TYPE_TXDATA_REQ		((u8)1)
-#define ZG_MAC_TYPE_MGMT_REQ		((u8)2)
+#define ZG_MAC_TYPE_TXDATA_REQ		((uint8_t)1)
+#define ZG_MAC_TYPE_MGMT_REQ		((uint8_t)2)
 
-#define ZG_MAC_TYPE_TXDATA_CONFIRM	((u8)1)
-#define ZG_MAC_TYPE_MGMT_CONFIRM	((u8)2)
-#define ZG_MAC_TYPE_RXDATA_INDICATE	((u8)3)
-#define ZG_MAC_TYPE_MGMT_INDICATE	((u8)4)
+#define ZG_MAC_TYPE_TXDATA_CONFIRM	((uint8_t)1)
+#define ZG_MAC_TYPE_MGMT_CONFIRM	((uint8_t)2)
+#define ZG_MAC_TYPE_RXDATA_INDICATE	((uint8_t)3)
+#define ZG_MAC_TYPE_MGMT_INDICATE	((uint8_t)4)
 
 // Subtype values which appear in ZG_PREAMBLE_SUBTYPE_IDX for each SPI message
 // Subtype for ZG_MAC_TYPE_TXDATA_REQ and ZG_MAC_TYPE_TXDATA_CONFIRM
-#define ZG_MAC_SUBTYPE_TXDATA_REQ_STD			((u8)1)
+#define ZG_MAC_SUBTYPE_TXDATA_REQ_STD			((uint8_t)1)
 
 // Subtype for ZG_MAC_TYPE_MGMT_REQ and ZG_MAC_TYPE_MGMT_CONFIRM
-#define ZG_MAC_SUBTYPE_MGMT_REQ_PMK_KEY			((u8)8)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_WEP_KEY			((u8)10)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_CALC_PSK		((u8)12)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_SET_PARAM		((u8)15)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_GET_PARAM		((u8)16)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_ADHOC_START		((u8)18)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_CONNECT			((u8)19)
-#define ZG_MAC_SUBTYPE_MGMT_REQ_CONNECT_MANAGE	((u8)20)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_PMK_KEY			((uint8_t)8)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_WEP_KEY			((uint8_t)10)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_CALC_PSK		((uint8_t)12)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_SET_PARAM		((uint8_t)15)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_GET_PARAM		((uint8_t)16)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_ADHOC_START		((uint8_t)18)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_CONNECT			((uint8_t)19)
+#define ZG_MAC_SUBTYPE_MGMT_REQ_CONNECT_MANAGE	((uint8_t)20)
 
 // Subtype for ZG_MAC_TYPE_RXDATA_INDICATE
-#define ZG_MAC_SUBTYPE_RXDATA_IND_STD			((u8)1)
+#define ZG_MAC_SUBTYPE_RXDATA_IND_STD			((uint8_t)1)
 
 // Subtype for ZG_MAC_TYPE_MGMT_INDICATE
-#define ZG_MAC_SUBTYPE_MGMT_IND_DISASSOC		((u8)1)
-#define ZG_MAC_SUBTYPE_MGMT_IND_DEAUTH			((u8)2)
-#define ZG_MAC_SUBTYPE_MGMT_IND_CONN_STATUS		((u8)4)
+#define ZG_MAC_SUBTYPE_MGMT_IND_DISASSOC		((uint8_t)1)
+#define ZG_MAC_SUBTYPE_MGMT_IND_DEAUTH			((uint8_t)2)
+#define ZG_MAC_SUBTYPE_MGMT_IND_CONN_STATUS		((uint8_t)4)
 
 // Parameter IDs for ZG_MAC_SUBTYPE_MGMT_REQ_SET_PARAM
 #define ZG_PARAM_MAC_ADDRESS			(1)
@@ -184,8 +184,8 @@ enum {
 #define ZG_INTR_ST_RD_CTRL_REG	(3)
 
 // interrupt state
-#define ZG_INTR_DISABLE		((u8)0)
-#define ZG_INTR_ENABLE		((u8)1)
+#define ZG_INTR_DISABLE		((uint8_t)0)
+#define ZG_INTR_ENABLE		((uint8_t)1)
 
 // mask values for ZG_INTR_REG and ZG_INTR2_REG
 #define	ZG_INTR_MASK_FIFO1		(0x80)
@@ -216,87 +216,87 @@ enum {
 
 typedef struct
 {
-    u8 slot;	/* slot index */
-    u8 keyLen;
-    u8 defID;	/* the default wep key id */
-    u8 ssidLen;	/* num valid bytes in ssid */
-    u8 ssid[ZG_MAX_SSID_LENGTH];	/* ssid of network */
-    u8 key[ZG_MAX_ENCRYPTION_KEYS][ZG_MAX_ENCRYPTION_KEY_SIZE];	/* wep key data for 4 default keys */
+    uint8_t slot;	/* slot index */
+    uint8_t keyLen;
+    uint8_t defID;	/* the default wep key id */
+    uint8_t ssidLen;	/* num valid bytes in ssid */
+    uint8_t ssid[ZG_MAX_SSID_LENGTH];	/* ssid of network */
+    uint8_t key[ZG_MAX_ENCRYPTION_KEYS][ZG_MAX_ENCRYPTION_KEY_SIZE];	/* wep key data for 4 default keys */
 } zg_wep_key_req_t;
 
 #define ZG_WEP_KEY_REQ_SIZE		(4 + ZG_MAX_SSID_LENGTH + ZG_MAX_ENCRYPTION_KEYS*ZG_MAX_ENCRYPTION_KEY_SIZE)
 
 typedef struct
 {
-    u8 configBits;
-    u8 phraseLen;	/* number of valid bytes in passphrase */
-    u8 ssidLen;		/* number of valid bytes in ssid */
-    u8 reserved;	/* alignment byte */
-    u8 ssid[ZG_MAX_SSID_LENGTH];	/* the string of characters representing the ssid */
-    u8 passPhrase[ZG_MAX_WPA_PASSPHRASE_LEN]; /* the string of characters representing the passphrase */
+    uint8_t configBits;
+    uint8_t phraseLen;	/* number of valid bytes in passphrase */
+    uint8_t ssidLen;		/* number of valid bytes in ssid */
+    uint8_t reserved;	/* alignment byte */
+    uint8_t ssid[ZG_MAX_SSID_LENGTH];	/* the string of characters representing the ssid */
+    uint8_t passPhrase[ZG_MAX_WPA_PASSPHRASE_LEN]; /* the string of characters representing the passphrase */
 } zg_psk_calc_req_t;
 
 #define ZG_PSK_CALC_REQ_SIZE	(4 + ZG_MAX_SSID_LENGTH + ZG_MAX_WPA_PASSPHRASE_LEN) /* 100 bytes */
 
 typedef struct
 {
-    u8 result;		/* indicating success or other */
-    u8 macState;	/* current State of the on-chip MAC */
-    u8 keyReturned;	/* 1 if psk contains key data, 0 otherwise */
-    u8 reserved;	/* pad byte */
-    u8 psk[ZG_MAX_PMK_LEN];	/* the psk bytes */
+    uint8_t result;		/* indicating success or other */
+    uint8_t macState;	/* current State of the on-chip MAC */
+    uint8_t keyReturned;	/* 1 if psk contains key data, 0 otherwise */
+    uint8_t reserved;	/* pad byte */
+    uint8_t psk[ZG_MAX_PMK_LEN];	/* the psk bytes */
 } zg_psk_calc_cnf_t;
 
 typedef struct
 {
-    u8 slot;
-    u8 ssidLen;
-    u8 ssid[ZG_MAX_SSID_LENGTH];
-    u8 keyData[ZG_MAX_PMK_LEN];
+    uint8_t slot;
+    uint8_t ssidLen;
+    uint8_t ssid[ZG_MAX_SSID_LENGTH];
+    uint8_t keyData[ZG_MAX_PMK_LEN];
 } zg_pmk_key_req_t;
 
 #define ZG_PMK_KEY_REQ_SIZE		(2 + ZG_MAX_SSID_LENGTH + ZG_MAX_PMK_LEN)
 
 typedef struct
 {
-    u16        rssi;                      /* the value of the G1000 RSSI when the data frame was received */
-    u8         dstAddr[6];    /* MAC Address to which the data frame was directed. */
-    u8         srcAddr[6];    /* MAC Address of the Station that sent the Data frame. */
-    u16        arrivalTime_th;               /* the value of the 32-bit G1000 system clock when the frame arrived */
-    u16        arrivalTime_bh;
-    u16        dataLen;                   /* the length in bytes of the payload which immediately follows this data structure */
+    uint16_t        rssi;                      /* the value of the G1000 RSSI when the data frame was received */
+    uint8_t         dstAddr[6];    /* MAC Address to which the data frame was directed. */
+    uint8_t         srcAddr[6];    /* MAC Address of the Station that sent the Data frame. */
+    uint16_t        arrivalTime_th;               /* the value of the 32-bit G1000 system clock when the frame arrived */
+    uint16_t        arrivalTime_bh;
+    uint16_t        dataLen;                   /* the length in bytes of the payload which immediately follows this data structure */
 } zg_rx_data_ind_t;
 
 typedef struct
 {
-	u8 secType;		/* security type : 0 - none; 1 - wep; 2 - wpa; 3 - wpa2; 0xff - best available */
-    u8 ssidLen;		/* num valid bytes in ssid */
-    u8 ssid[ZG_MAX_SSID_LENGTH];	/* the ssid of the target */
-    u16 sleepDuration;	/* power save sleep duration in units of 100 milliseconds */
-    u8 modeBss;			/* 1 - infra; 2 - adhoc */
-    u8 reserved;
+	uint8_t secType;		/* security type : 0 - none; 1 - wep; 2 - wpa; 3 - wpa2; 0xff - best available */
+    uint8_t ssidLen;		/* num valid bytes in ssid */
+    uint8_t ssid[ZG_MAX_SSID_LENGTH];	/* the ssid of the target */
+    uint16_t sleepDuration;	/* power save sleep duration in units of 100 milliseconds */
+    uint8_t modeBss;			/* 1 - infra; 2 - adhoc */
+    uint8_t reserved;
 } zg_connect_req_t;
 
 #define ZG_CONNECT_REQ_SIZE			(38)
 
 void zg_init();
 void zg_reset();
-void spi_transfer(volatile U8* buf, U16 len, U8 toggle_cs);
+void spi_transfer(volatile uint8_t* buf, uint16_t len, uint8_t toggle_cs);
 void zg_chip_reset();
 void zg_interrupt2_reg();
-void zg_interrupt_reg(U8 mask, U8 state);
+void zg_interrupt_reg(uint8_t mask, uint8_t state);
 void zg_isr();
 void zg_process_isr();
-void zg_send(U8* buf, U16 len);
-void zg_recv(U8* buf, U16* len);
-U16 zg_get_rx_status();
+void zg_send(uint8_t* buf, uint16_t len);
+void zg_recv(uint8_t* buf, uint16_t* len);
+uint16_t zg_get_rx_status();
 void zg_clear_rx_status();
-void zg_set_tx_status(U8 status);
-U8 zg_get_conn_state();
-void zg_set_buf(U8* buf, U16 buf_len);
-U8* zg_get_mac();
-void zg_set_ssid(U8* ssid, U8 ssid_len);
-void zg_set_sec(U8 sec_type, U8* sec_key, U8 sec_key_len);
+void zg_set_tx_status(uint8_t status);
+uint8_t zg_get_conn_state();
+void zg_set_buf(uint8_t* buf, uint16_t buf_len);
+uint8_t* zg_get_mac();
+void zg_set_ssid(uint8_t* ssid, uint8_t ssid_len);
+void zg_set_sec(uint8_t sec_type, uint8_t* sec_key, uint8_t sec_key_len);
 void zg_drv_process();
 
 #endif /* G2100_H_ */

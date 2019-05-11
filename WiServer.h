@@ -48,6 +48,7 @@ extern "C" {
 
 #include "Print.h"
 
+typedef bool boolean;
 
 /*
  * Function for handling data returned by a POST or GET request
@@ -79,7 +80,7 @@ class GETrequest
 		/*
 		 * Creates a new GETrequest with the provided IP, port, host name and URL
 		 */
-		GETrequest(uint8* ipAddr, int port, char* hostName, char* URL);
+		GETrequest(uint8_t* ipAddr, int port, char* hostName, char* URL);
 
 		/*
 		 * Submits the request and prevents further changes to the request until it has been
@@ -144,7 +145,7 @@ class POSTrequest : public GETrequest
 		/*
 		 * Creates a new POSTrequest with the provided IP, port, host name, URL and body function.
 		 */
-		POSTrequest(uint8* ipAddr, int port, char* hostName, char* URL, bodyFunction body);
+		POSTrequest(uint8_t* ipAddr, int port, char* hostName, char* URL, bodyFunction body);
 
 		void setBodyFunc(bodyFunction body);
 

@@ -56,7 +56,7 @@ void stack_init(void)
 
 	struct uip_eth_addr mac;
 
-	U8* mac_addr = zg_get_mac();
+	uint8_t* mac_addr = zg_get_mac();
 
 	mac.addr[0] = mac_addr[0];
 	mac.addr[1] = mac_addr[1];
